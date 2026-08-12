@@ -4,7 +4,7 @@ Support wrapper scripts for Beavogui et al. (2026) BioRxiv.
 
 ## Description
 Bacteria and phages have co-evolved tit-for-tat strategies to combat one another for survival. To overcome phage infection, bacteria have developed various defense systems (the defensome), and in response, phages have evolved a counter-defensome to inhibit or evade such defensive strategies. While significant progress has been achieved on mechanistic, structural and functional aspects of the defensome, the study of the phage counter-defensome is relatively new, with very limited information available on the diversity and distribution of these systems across complex environmental phageomes. In Beavogui et al., we performed a large-scale analysis of the counter-defensome of 50,595 DNA phage population genomes reconstructed from soil, marine, and human gut environments. Here we present the collection of wrapper scripts used in such work. 
-[(Beavogui et al., 2026, BioRxiv)](https://www.biorxiv.org/content/10.1101/2023.08.12.553040v2). 
+[Beavogui et al., 2026, bioRxiv](https://www.biorxiv.org/content/10.64898/2026.08.10.744029v1). 
 
 PLEASE NOTE: Our pipeline includes a set of wrapper shell scripts that allow to reconstitute the major analyses steps of this publication. However, this pipeline requires multiple dependencies, which have to be installed prior to its use. 
 
