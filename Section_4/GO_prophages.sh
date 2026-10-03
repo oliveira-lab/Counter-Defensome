@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 #########################################################################
 # File Name: GO_prophages.sh
 # Author(s): Lucas da Silva
@@ -11,8 +12,10 @@
 
 set -uo pipefail
 
-VS2_DB="/PATH/TO/virsorter2_db_local"
-INPUT_DIR="${1:?Usage: GO_prophages.sh <INPUT_DIR> [RUN_LABEL] [OUTPUT_BASE]}"
+[[ "${1:-}" == "--vs2-db" ]] || { echo "ERROR: --vs2-db PATH is required (VirSorter2 database directory)"; exit 1; }
+VS2_DB="${2:?--vs2-db requires a path}"; shift 2
+
+INPUT_DIR="${1:?Usage: GO_prophages.sh --vs2-db PATH <INPUT_DIR> [RUN_LABEL] [OUTPUT_BASE]}"
 INPUT_DIR="${INPUT_DIR%/}"
 RUN_LABEL="${2:-$(basename "$INPUT_DIR")}"
 OUTPUT_BASE="${3:-$(dirname "$INPUT_DIR")/virsorter2_results_${RUN_LABEL}}"
@@ -24,7 +27,7 @@ VS2_OUT="$OUTPUT_BASE/vs2_out"
 HC_DIR="$OUTPUT_BASE/high_confidence"
 mkdir -p "$HC_DIR"
 
-#concatenate MAGs, prefix headers with source MAG_ID
+#concatenate MAGs and prefix headers with source MAG_ID
 > "$COMBINED_FASTA"
 N_MAGS=0
 for FASTA_FILE in "$INPUT_DIR"/*.{fasta,fa,fna}; do
@@ -36,7 +39,7 @@ done
 [ "$N_MAGS" -gt 0 ] || { echo "ERROR: no .fasta/.fa/.fna files in $INPUT_DIR"; exit 1; }
 echo "Concatenated $N_MAGS MAGs -> $COMBINED_FASTA"
 
-#runs VirSorter2
+#run VirSorter2
 VS2_JOBS=$(( SLURM_CPUS_PER_TASK / 2 )); [ "$VS2_JOBS" -lt 1 ] && VS2_JOBS=1
 ml virsorter
 virsorter run \
@@ -51,7 +54,7 @@ FINAL_BOUNDARY_TSV="$VS2_OUT/${RUN_LABEL}-final-viral-boundary.tsv"
 [[ -f "$FINAL_BOUNDARY_TSV" ]] || FINAL_BOUNDARY_TSV="$VS2_OUT/final-viral-boundary.tsv"
 [[ -f "$FINAL_SCORE_TSV" ]] || { echo "ERROR: VirSorter2 produced no final-viral-score.tsv"; exit 1; }
 
-# high-confidence filter: max_score>=0.9 
+#high-confidence filter: max_score>=0.9 
 HC_SCORE_TSV="$HC_DIR/high_confidence_score.tsv"
 HC_IDS="$HC_DIR/high_confidence_ids.txt"
 HC_FASTA="$HC_DIR/high_confidence.fna"
