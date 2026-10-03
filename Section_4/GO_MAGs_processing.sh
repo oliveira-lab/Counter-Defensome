@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#########################################################################
+# File Name: GO_MAGs_processing.sh
+# Author(s): Lucas da Silva
+# Institution: Genoscope, Evry, France
+# Mail: ldasilva@genoscope.cns.fr
+# Date: 25/09/2026
+#########################################################################
+
+
 usage() {
     cat <<'USAGE'
 Usage:

@@ -1,4 +1,14 @@
 #!/bin/bash
+
+#########################################################################
+# File Name: GO_reads_QC.sh
+# Author(s): Lucas da Silva
+# Institution: Genoscope, Evry, France
+# Mail: ldasilva@genoscope.cns.fr
+# Date: 25/09/2026
+#########################################################################
+
+
 set -euo pipefail
 shopt -s nullglob
 
